@@ -107,7 +107,7 @@ class JsmodelProviderPass implements
             $path = $bundle->getPath() . '/' . $path;
         }
         if (realpath($path)) {
-            $this->addNamespaceMapping($config['path'], $config['exportName'], $config['type'], $container, true);
+            $this->addNamespaceMapping($path, $config['exportName'], $config['type'], $container, true);
         }
     }
 

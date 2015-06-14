@@ -48,4 +48,31 @@ class Util
 
         return $path;
     }
-} 
+
+    /**
+     * @param string $path
+     * @param string $exportRequireJsName
+     * @param string $type
+     * @return array
+     */
+    public function buildBundleConfig($path, $exportRequireJsName, $type = 'js')
+    {
+        return [
+            'path'       => $path,
+            'exportName' => $exportRequireJsName,
+            'type'       => $type,
+        ];
+    }
+
+    /**
+     * @param array  $config
+     * @param string $path
+     * @param string $exportRequireJsName
+     * @param string $type
+     * @return array
+     */
+    public function buildBundleConfigMultiline(array &$config, $path, $exportRequireJsName, $type = 'js')
+    {
+        return $config = array_merge($config, $this->buildBundleConfig($path, $exportRequireJsName, $type));
+    }
+}

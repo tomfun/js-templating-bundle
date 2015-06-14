@@ -106,7 +106,9 @@ class JsmodelProviderPass implements
         if (substr($path, 0, 1) !== '/') {
             $path = $bundle->getPath() . '/' . $path;
         }
-        $this->addNamespaceMapping($config['path'], $config['exportName'], $config['type'], $container, true);
+        if (realpath($path)) {
+            $this->addNamespaceMapping($config['path'], $config['exportName'], $config['type'], $container, true);
+        }
     }
 
     /**

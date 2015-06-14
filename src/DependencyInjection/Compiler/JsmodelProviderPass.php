@@ -17,7 +17,6 @@ use Tommy\Bundle\JsTemplatingBundle\Service\Util;
 class JsmodelProviderPass implements
     CompilerPassInterface
 {
-    const CLASS_SRV = 'tommy_js_templating.jsmodel';
     const CLASS_TAG = 'werkint.requirejs.jsmodelprovider';
     const EXT_NAME = 'tommy_js_templating';
     const JS_MODEL_POSTFIX = 'jsmodeldir';
@@ -41,14 +40,6 @@ class JsmodelProviderPass implements
     public function process(
         ContainerBuilder $container
     ) {
-        if (!$container->hasDefinition(static::CLASS_SRV)) {
-            return;
-        }
-        $definition = $container->getDefinition(
-            static::CLASS_SRV
-        );
-
-        $werkintInterface = 'Werkint\Bundle\RequireJSBundle\Service\Jsmodel\JsmodelProviderInterface';
         $config = $container->getParameter(static::EXT_NAME);
         foreach ($this->kernel->getBundles() as $bundle) {
             if (!$bundle->getContainerExtension()) {
@@ -85,7 +76,7 @@ class JsmodelProviderPass implements
         $list = $container->findTaggedServiceIds(static::CLASS_TAG);
         foreach ($list as $id => $attributes) {
             $srv = $container->get($id);
-            if (!($srv instanceof JsmodelProviderInterface) && !($srv instanceof $werkintInterface)) {
+            if (!($srv instanceof JsmodelProviderInterface)) {
                 throw new \Exception('JsmodelProviderInterface interface is missing');
             }
             $paths = $srv->getPaths();
@@ -96,11 +87,6 @@ class JsmodelProviderPass implements
 
                 $this->addNamespaceMapping($location, $path, 'js', $container, true);
             }
-            $definition->addMethodCall(
-                'addProvider', [
-                    new Reference($id),
-                ]
-            );
         }
     }
 

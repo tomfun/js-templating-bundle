@@ -24,11 +24,6 @@ class DumpCommand extends ContainerAwareCommand
                 InputArgument::OPTIONAL,
                 'Who do you want to greet?'
             )
-            ->addArgument(
-                'type',
-                InputArgument::OPTIONAL,
-                'Who do you want to greet?'
-            )
             ->addOption(
                 'screen',
                 null,
@@ -39,7 +34,7 @@ class DumpCommand extends ContainerAwareCommand
                 'dump',
                 null,
                 InputOption::VALUE_NONE,
-                'If set, the task will yell in uppercase letters'
+                'Dump to specified path'
             )
         ;
     }

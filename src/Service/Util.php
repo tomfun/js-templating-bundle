@@ -2,7 +2,9 @@
 namespace Tommy\Bundle\JsTemplatingBundle\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Tommy\Bundle\JsTemplatingBundle\DependencyInjection\Compiler\JsmodelProviderPass;
 use Tommy\Bundle\JsTemplatingBundle\Exception\InvalidArgumentException;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * @author Bogdan Yurov <bogdan@yurov.me>
@@ -75,4 +77,14 @@ class Util
     {
         return $config = array_merge($config, static::buildBundleConfig($path, $exportRequireJsName, $type));
     }
+
+    /**
+     * @param Extension $extension
+     * @return string
+     */
+    public static function configPath(Extension $extension)
+    {
+        return $extension->getAlias() . '.' . JsmodelProviderPass::JS_MODEL_POSTFIX;
+    }
+
 }

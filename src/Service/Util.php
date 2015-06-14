@@ -55,7 +55,7 @@ class Util
      * @param string $type
      * @return array
      */
-    public function buildBundleConfig($path, $exportRequireJsName, $type = 'js')
+    public static function buildBundleConfig($path, $exportRequireJsName, $type = 'js')
     {
         return [
             'path'       => $path,
@@ -71,8 +71,8 @@ class Util
      * @param string $type
      * @return array
      */
-    public function buildBundleConfigMultiline(array &$config, $path, $exportRequireJsName, $type = 'js')
+    public static function buildBundleConfigMultiline(array &$config, $path, $exportRequireJsName, $type = 'js')
     {
-        return $config = array_merge($config, $this->buildBundleConfig($path, $exportRequireJsName, $type));
+        return $config = array_merge($config, static::buildBundleConfig($path, $exportRequireJsName, $type));
     }
 }

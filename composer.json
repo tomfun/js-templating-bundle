@@ -1,6 +1,6 @@
 {
     "name":        "tomfun/js-templating-bundle",
-    "description": "This bundle provides integration of gulp into Symfony2",
+    "description": "This bundle provides integration of gulp into Symfony2. Twigjs tag for twig.",
     "type":        "symfony-bundle",
     "license":     "proprietary",
     "authors":     [

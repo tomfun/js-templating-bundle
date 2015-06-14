@@ -84,7 +84,7 @@ class Util
      */
     public static function configPath(Extension $extension)
     {
-        return $extension->getAlias() . '.' . JsmodelProviderPass::JS_MODEL_POSTFIX;
+        return $extension->getAlias() . '.' . JsmodelProviderPass::JS_CONFIG_POSTFIX;
     }
 
 }

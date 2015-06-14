@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Tommy\Bundle\JsTemplatingBundle\Service\Jsmodel\JsmodelProviderInterface;
 use Tommy\Bundle\JsTemplatingBundle\Service\Util;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
  * JsmodelProviderPass.
@@ -51,11 +52,11 @@ class JsmodelProviderPass implements
             $configPath = $alias . '.' . static::JS_CONFIG_POSTFIX;
             if ($container->hasParameter($configPath) && $bundleConfig = $container->getParameter($configPath)) {
                 if (is_array($bundleConfig) && count($bundleConfig) === 3 && isset($bundleConfig['path'])) {
-                    $this->addNamespaceMappingFromConfig($bundleConfig, $container);
+                    $this->addNamespaceMappingFromConfig($bundleConfig, $container, $bundle);
                     continue;
                 }
                 foreach ($bundleConfig as $item) {
-                    $this->addNamespaceMappingFromConfig($item, $container);
+                    $this->addNamespaceMappingFromConfig($item, $container, $bundle);
                 }
                 continue;
             }
@@ -91,14 +92,19 @@ class JsmodelProviderPass implements
     }
 
     /**
-     * @param array     $config
+     * @param array            $config
      * @param ContainerBuilder $container
+     * @param BundleInterface  $bundle
      * @throws \Exception
      */
-    protected function addNamespaceMappingFromConfig(array $config, ContainerBuilder $container)
+    protected function addNamespaceMappingFromConfig(array $config, ContainerBuilder $container, BundleInterface $bundle)
     {
         if (!(isset($config['path']) && isset($config['exportName']) && isset($config['type']))) {
             throw new \Exception('JsTemplating exception: path, exportName or type is missing for bundle config');
+        }
+        $path = $config['path'];
+        if (substr($path, 0, 1) !== '/') {
+            $path = $bundle->getPath() . '/' . $path;
         }
         $this->addNamespaceMapping($config['path'], $config['exportName'], $config['type'], $container, true);
     }

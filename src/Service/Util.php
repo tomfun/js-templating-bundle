@@ -75,7 +75,10 @@ class Util
      */
     public static function buildBundleConfigMultiline(array &$config, $path, $exportRequireJsName, $type = 'js')
     {
-        return $config = array_merge($config, static::buildBundleConfig($path, $exportRequireJsName, $type));
+        return $config = array_merge(
+            isset($config['path']) ? [$config] : $config,
+            [static::buildBundleConfig($path, $exportRequireJsName, $type)]
+        );
     }
 
     /**
